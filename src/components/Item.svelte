@@ -1,23 +1,24 @@
-<script>
+ <script>
 	export let todo;
-	export let handleCheckTodo;
-	export let editMode;
-	export let handleEditMode;
-	export let deleteTodoItem;
-    export let handleEditItem
+	export let handleTodoCHK;
+	export let editItem;
+    export let handleEditMode
+    export let updateItem
+    export let deleteItem
 </script>
 
 <li class="wrapper">
 	<div class="item">
-		<input type="checkbox" bind:checked={todo.done} on:click={() => handleCheckTodo(todo.id)} />
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		{#if editMode === todo.id}
-			<input type="text" bind:value={todo.content} on:focusout={() => handleEditItem(todo)} />
+		<input type="checkbox" bind:checked={todo.checked} on:click={() => handleTodoCHK(todo.id)} />
+		{#if todo.id === editItem}
+			<input type="text" bind:value={todo.content} on:focusout={() => updateItem(todo)}/>
 		{:else}
-			<div class="content" on:dblclick={() => handleEditMode(todo.id)}>{todo.content}</div>
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<div class="content" on:click={() => handleEditMode(todo)}>{todo.content}</div>
 		{/if}
 	</div>
-	<button on:click={() => deleteTodoItem(todo.id)}>X</button>
+	<button on:click={() => deleteItem(todo.id)}>X</button>
 </li>
 
 <style>
@@ -26,9 +27,9 @@
 		justify-content: space-between;
 	}
 
-    .item {
-        display: flex;
-        align-items: center;
-        height: 2rem;
-    }
+	.item {
+		display: flex;
+		align-items: center;
+		height: 2rem;
+	}
 </style>

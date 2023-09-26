@@ -3,10 +3,10 @@
 
 	import Header from '../components/Header.svelte';
 	import List from '../components/List.svelte';
+	import Info from '../components/Info.svelte';
 
-	let newValue = '';
-
-	let editMode = '';
+    let todoValue = ''
+    let editItem = ''
 
 	let todos = [
 		{
@@ -32,8 +32,9 @@
 	];
 
 	$: fetchTodos = todos;
+    $: todoCount = fetchTodos.length
 
-	const handleCheckTodo = (id) => {
+	const handleTodoCHK = (id) => {
 		fetchTodos.map((todo) => {
 			if (todo.id === id) todo.done = !todo.done;
 
@@ -41,42 +42,44 @@
 		});
 	};
 
-	const handleAddItem = (e) => {
-		if (e.keyCode === 13) addTodoItem();
-	};
+    const handleAddItem = (e) => {
+        if(e.keyCode === 13) addItem()
+    }
 
-	const addTodoItem = () => {
-		if (newValue) {
-			const newItem = {
-				id: uuid(),
-				content: newValue,
-				done: false
-			};
+    const addItem = () => {
+        if(todoValue){
+            const newItem = {
+                id: uuid(),
+                content: todoValue,
+                done: false
+            }
 
-			todos = [...todos, newItem];
-			newValue = '';
-		}
-	};
+            todos = [...todos, newItem]
+            todoValue = ''
+        }
+    }
 
-	const handleEditMode = (id) => {
-		editMode = id;
-	};
+    const handleEditMode = (item) => {
+        editItem = item.id
+    }
 
-	const handleEditItem = (todoItem) => {
-		todos = todos.map((todo) => {
-			if (todo.id === todoItem.id) {
-				todo = todoItem;
-			}
-			return todo;
-		});
+    const updateItem = (item) => {
+        todos = todos.map(todo => {
+            if(todo.id === item.id) {
+                todo = item
+            }
+            return todo
+        })
 
-		editMode = '';
-	};
+        editItem = ''
+    }
 
-	const deleteTodoItem = (id) => {
-		todos = todos.filter((todo) => todo.id !== id);
-	};
+    const deleteItem = (id) => {
+        todos = todos.filter(todo => todo.id !== id)
+    }
+
 </script>
 
-<Header bind:newValue {handleAddItem} />
-<List {todos} {handleCheckTodo} {editMode} {handleEditMode} {handleEditItem} {deleteTodoItem} />
+<Header bind:todoValue {handleAddItem} />
+<Info {todoCount}/>
+<List {todos} {handleTodoCHK} {editItem} {handleEditMode} {updateItem} {deleteItem}/>

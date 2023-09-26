@@ -1,11 +1,11 @@
 <script>
-    export let newValue
+    export let todoValue
     export let handleAddItem
 </script>
 
 <header>
 	<h1>Svelte ToDo</h1>
-	<input type="text" bind:value={newValue} on:keyup={handleAddItem}/>
+	<input type="text" bind:value={todoValue} on:keyup={handleAddItem}/>
 </header>
 
 <style>
