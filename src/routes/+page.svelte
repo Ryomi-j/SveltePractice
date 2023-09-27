@@ -31,12 +31,11 @@
 		}
 	];
 
-	$: fetchTodos = todos
-	$: total = fetchTodos.length
+	$: fetchTodos = todos;
+	$: total = fetchTodos.length;
 
-	// 원본을 건드리지 않기
 	const handleCHKBox = (id) => {
-		fetchTodos.map((todo) => {
+		todos = todos.map((todo) => {
 			if (todo.id === id) todo.done = !todo.done;
 			return todo;
 		});
@@ -73,11 +72,11 @@
 	};
 
 	const deleteItem = (id) => {
-		todos = todos.filter(todo => todo.id !== id)
-	}
+		todos = todos.filter((todo) => todo.id !== id);
+	};
 </script>
 
 <!-- 'bind:newItem' 확인하기 -->
 <Header bind:newItem {addNewItem} />
 <Info {total} />
-<List {todos} {handleCHKBox} {editItem} {handleEditItem} {updateItem} {deleteItem}/>
+<List {fetchTodos} {handleCHKBox} {editItem} {handleEditItem} {updateItem} {deleteItem} />

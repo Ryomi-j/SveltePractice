@@ -1,6 +1,7 @@
 <script>
 	import Item from './Item.svelte';
-	export let todos;
+	
+	export let fetchTodos;
 	export let handleCHKBox;
 	export let handleEditItem;
 	export let editItem;
@@ -9,7 +10,7 @@
 </script>
 
 <ul>
-	{#each todos as todo}
+	{#each fetchTodos as todo}
 		<Item {todo} {handleCHKBox} {editItem} {handleEditItem} {updateItem} {deleteItem}/>
 	{/each}
 </ul>
