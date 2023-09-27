@@ -13,13 +13,9 @@
 </script>
 
 <ul>
-	{#each fetchTodos as todo, idx(todo)}
-	<!-- animate는 each block에서 key값과 함께 사용 가능 -->
-		<li 
-			in:fade 
-			out:fade={{ duration: 100 }} 
-			animate:flip={{ duration: 1000 }} 
-		>
+	{#each fetchTodos as todo, idx (todo)}
+		<!-- animate는 each block에서 key값과 함께 사용 가능 -->
+		<li in:fade out:fade={{ duration: 100 }} animate:flip={{ duration: 1000 }}>
 			<Item {todo} {handleCHKBox} {editItem} {handleEditItem} {updateItem} {deleteItem} />
 		</li>
 	{/each}
