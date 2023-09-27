@@ -4,11 +4,14 @@
 	import Header from '../components/Header.svelte';
 	import List from '../components/List.svelte';
 	import Info from '../components/Info.svelte';
-	import Constant from '../constant';
 
-	let newItem = '';
-	let editItem = '';
-
+	// Todo : checkbox 연결
+	// Todo : Item 추가
+	// Todo : Item update
+	// Todo : Item delete
+	// Todo : Edit Mode
+	// Todo : CSS Effect - fade, flip
+	
 	let todos = [
 		{
 			id: uuid(),
@@ -32,62 +35,8 @@
 		}
 	];
 
-	$: fetchTodos = todos;
-	$: total = fetchTodos.length;
-
-	const handleCHKBox = (id) => {
-		todos = todos.map((todo) => {
-			if (todo.id === id) todo.done = !todo.done;
-			return todo;
-		});
-	};
-
-	const addNewItem = (e) => {
-		if (!newItem) return;
-
-		if (e.keyCode === 13) {
-			const newListItem = {
-				id: uuid(),
-				content: newItem,
-				done: false
-			};
-			todos = [...todos, newListItem];
-			newItem = '';
-		}
-	};
-
-	const handleEditItem = (id) => {
-		editItem = id;
-	};
-
-	const updateItem = (e, item) => {
-		if (e.keyCode === 13) {
-			todos = todos.map((todo) => {
-				if (todo.id === item.id) {
-					todo = item;
-				}
-				editItem = '';
-				return todo;
-			});
-		}
-	};
-
-	const deleteItem = (id) => {
-		todos = todos.filter((todo) => todo.id !== id);
-	};
-
-	let viewMode = Constant.ALL;
-
-	$: if(viewMode === Constant.ALL) fetchTodos = todos
-	$: if(viewMode === Constant.ACTIVE) fetchTodos = todos.filter(todo => !todo.done)
-	$: if(viewMode === Constant.DONE) fetchTodos = todos.filter(todo => todo.done)
-
-	const handleViewMode = (mode) => {
-		viewMode = mode
-	}
 </script>
 
-<!-- 'bind:newItem' 확인하기 -->
-<Header bind:newItem {addNewItem} />
-<Info {total} {handleViewMode}/>
-<List {fetchTodos} {handleCHKBox} {editItem} {handleEditItem} {updateItem} {deleteItem} />
+<Header />
+<Info />
+<List />

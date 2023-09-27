@@ -1,25 +1,12 @@
 <script>
-	export let todo;
-	export let handleCHKBox;
-	export let handleEditItem;
-	export let editItem;
-	export let updateItem
-	export let deleteItem
 </script>
 
 <div class="wrapper">
 	<div class="item">
-		<input type="checkbox" bind:checked={todo.done} on:click={() => handleCHKBox(todo.id)} />
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-
-		{#if todo.id === editItem}
-			<input type="text" bind:value={todo.content} on:keyup={(e) => updateItem(e, todo)} />
-		{:else}
-			<div class="content" on:click={() => handleEditItem(todo.id)}>{todo.content}</div>
-		{/if}
+		<input type="checkbox" />
+		<div class="content" />
 	</div>
-	<button on:click={() => deleteItem(todo.id)}>X</button>
+	<button>X</button>
 </div>
 
 <style>
