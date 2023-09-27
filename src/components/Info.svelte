@@ -1,9 +1,9 @@
 <script>
-    export let todoCount
+    export let total
 </script>
 
 <div class="category">
-    <div>Count: {todoCount}</div>
+    <div>Count: {total}</div>
     <div>
         <button>ALL</button>
         <button>ACTIVE</button>

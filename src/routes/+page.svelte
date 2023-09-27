@@ -5,8 +5,8 @@
 	import List from '../components/List.svelte';
 	import Info from '../components/Info.svelte';
 
-    let todoValue = ''
-    let editItem = ''
+	let newItem = '';
+	let editItem = '';
 
 	let todos = [
 		{
@@ -31,55 +31,53 @@
 		}
 	];
 
-	$: fetchTodos = todos;
-    $: todoCount = fetchTodos.length
+	$: fetchTodos = todos
+	$: total = fetchTodos.length
 
-	const handleTodoCHK = (id) => {
+	// 원본을 건드리지 않기
+	const handleCHKBox = (id) => {
 		fetchTodos.map((todo) => {
 			if (todo.id === id) todo.done = !todo.done;
-
 			return todo;
 		});
 	};
 
-    const handleAddItem = (e) => {
-        if(e.keyCode === 13) addItem()
-    }
+	const addNewItem = (e) => {
+		if (!newItem) return;
 
-    const addItem = () => {
-        if(todoValue){
-            const newItem = {
-                id: uuid(),
-                content: todoValue,
-                done: false
-            }
+		if (e.keyCode === 13) {
+			const newListItem = {
+				id: uuid(),
+				content: newItem,
+				done: false
+			};
+			todos = [...todos, newListItem];
+			newItem = '';
+		}
+	};
 
-            todos = [...todos, newItem]
-            todoValue = ''
-        }
-    }
+	const handleEditItem = (id) => {
+		editItem = id;
+	};
 
-    const handleEditMode = (item) => {
-        editItem = item.id
-    }
+	const updateItem = (e, item) => {
+		if (e.keyCode === 13) {
+			todos = todos.map((todo) => {
+				if (todo.id === item.id) {
+					todo = item;
+				}
+				editItem = '';
+				return todo;
+			});
+		}
+	};
 
-    const updateItem = (item) => {
-        todos = todos.map(todo => {
-            if(todo.id === item.id) {
-                todo = item
-            }
-            return todo
-        })
-
-        editItem = ''
-    }
-
-    const deleteItem = (id) => {
-        todos = todos.filter(todo => todo.id !== id)
-    }
-
+	const deleteItem = (id) => {
+		todos = todos.filter(todo => todo.id !== id)
+	}
 </script>
 
-<Header bind:todoValue {handleAddItem} />
-<Info {todoCount}/>
-<List {todos} {handleTodoCHK} {editItem} {handleEditMode} {updateItem} {deleteItem}/>
+<!-- 'bind:newItem' 확인하기 -->
+<Header bind:newItem {addNewItem} />
+<Info {total} />
+<List {todos} {handleCHKBox} {editItem} {handleEditItem} {updateItem} {deleteItem}/>
