@@ -4,6 +4,7 @@
 	import Header from '../components/Header.svelte';
 	import List from '../components/List.svelte';
 	import Info from '../components/Info.svelte';
+	import Constant from '../constant';
 
 	let newItem = '';
 	let editItem = '';
@@ -74,9 +75,19 @@
 	const deleteItem = (id) => {
 		todos = todos.filter((todo) => todo.id !== id);
 	};
+
+	let viewMode = Constant.ALL;
+
+	$: if(viewMode === Constant.ALL) fetchTodos = todos
+	$: if(viewMode === Constant.ACTIVE) fetchTodos = todos.filter(todo => !todo.done)
+	$: if(viewMode === Constant.DONE) fetchTodos = todos.filter(todo => todo.done)
+
+	const handleViewMode = (mode) => {
+		viewMode = mode
+	}
 </script>
 
 <!-- 'bind:newItem' 확인하기 -->
 <Header bind:newItem {addNewItem} />
-<Info {total} />
+<Info {total} {handleViewMode}/>
 <List {fetchTodos} {handleCHKBox} {editItem} {handleEditItem} {updateItem} {deleteItem} />
