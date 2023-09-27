@@ -7,7 +7,7 @@
 	export let deleteItem
 </script>
 
-<li class="wrapper">
+<div class="wrapper">
 	<div class="item">
 		<!-- 'bind:checked={todo.checked}' 확인 -->
 		<input type="checkbox" bind:checked={todo.checked} on:click={() => handleCHKBox(todo.id)} />
@@ -21,7 +21,7 @@
 		{/if}
 	</div>
 	<button on:click={() => deleteItem(todo.id)}>X</button>
-</li>
+</div>
 
 <style>
 	.wrapper {
